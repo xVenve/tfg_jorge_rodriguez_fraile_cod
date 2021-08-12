@@ -14,8 +14,8 @@ def connect():
 def insert_sensor_data_DB(values):
     mydb = connect()
     with mydb.cursor() as mycursor:
-        sql = "INSERT INTO sensor_data (date, device, temperature, humidity, pm2_5, pm10, co, co2, intruder)" \
-              "VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s); "
+        sql = "INSERT INTO sensor_data (date, device, temperature, humidity, pm2_5, pm10, co, co2)" \
+              "VALUES (%s, %s, %s, %s, %s, %s, %s, %s); "
         val = (
             values["date"],
             values["device"],
@@ -25,7 +25,6 @@ def insert_sensor_data_DB(values):
             values["pm10"],
             values["co"],
             values["co2"],
-            values["intruder"],
         )
         mycursor.execute(sql, val)
         mydb.commit()

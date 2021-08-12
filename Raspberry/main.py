@@ -1,13 +1,16 @@
+import socket
+import threading
+import time
 import uuid
 from datetime import datetime
-import time
-import socket
 
+from cam_on_web import *
+from co import *
 from co2 import *
 from database import *
 from sds011 import *
-from co import *
 from temp_hum import *
+
 
 # Device IP
 def get_ip():
@@ -15,12 +18,13 @@ def get_ip():
     try:
         # doesn't even have to be reachable
         s.connect(('10.255.255.255', 1))
-        IP = s.getsockname()[0]
+        ip = s.getsockname()[0]
     except Exception:
-        IP = '127.0.0.1'
+        ip = '127.0.0.1'
     finally:
         s.close()
-    return IP
+    return ip
+
 
 # Device identification
 device_id = ':'.join(['{:02x}'.format((uuid.getnode() >> ele) & 0xff) for ele in range(0, 8 * 6, 8)][::-1])
@@ -34,8 +38,13 @@ device_params = {
 }
 insert_update_device_DB(device_params)
 
+# Stream device cam
+camera = threading.Thread(target=cam_web)
+camera.start()
+
 # Temperature and Humidity sensor
 temp_hum_sensor = DHT11()
+
 # Dust sensor
 dust_sensor = SDS011("/dev/ttyUSB0", use_query_mode=True)
 
@@ -58,7 +67,6 @@ try:
         co = co_sensor_readadc(mq7_apin, SPICLK, SPIMOSI, SPIMISO, SPICS)
         co2 = co2_sensor.get()
         pm2_5, pm10 = dust_sensor.query()
-        intruder = 0
 
         # Insert measurements
         data = {
@@ -70,7 +78,6 @@ try:
             "pm10": pm10,
             "co": str("%.2f" % ((co / 1024.) * 100)),
             "co2": co2,
-            "intruder": intruder,
         }
         insert_sensor_data_DB(data)
 
