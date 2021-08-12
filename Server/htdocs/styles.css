@@ -1,6 +1,5 @@
 .all {
     margin: 0 auto;
-    background-color: #6495ED;
     top: 0;
     left: 0;
     padding: 10px;
@@ -9,7 +8,7 @@
 
 .center {
     margin: 0 auto;
-    width: 50%;
+    width: 50%; 
 }
 
 .boton {

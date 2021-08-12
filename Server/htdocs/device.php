@@ -58,7 +58,7 @@ $chartQueryRecords = mysqli_query($con, $chartQuery);
     </script>
 </head>
 
-<body>
+<body style="background-color:#6495ED;">
     <div class="all">
         <div class="center">
             <?php
@@ -89,7 +89,6 @@ $chartQueryRecords = mysqli_query($con, $chartQuery);
                 <th>PM<sub>10</sub></th>
                 <th>CO</th>
                 <th>CO<sub>2</sub></th>
-                <th>Intruso</th>
             </tr>";
             while ($row = mysqli_fetch_array($result)) {
                 echo "<tr>";
@@ -100,7 +99,6 @@ $chartQueryRecords = mysqli_query($con, $chartQuery);
                 echo "<td>" . $row['pm10'] . "</td>";
                 echo "<td>" . $row['co'] . "</td>";
                 echo "<td>" . $row['co2'] . "</td>";
-                echo "<td>" . $row['intruder'] . "</td>";
                 echo "</tr>";
             }
             echo "</table>";

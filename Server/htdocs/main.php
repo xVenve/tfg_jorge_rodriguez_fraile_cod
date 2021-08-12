@@ -15,12 +15,12 @@ if (!isset($_SESSION["username"])) {
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 </head>
 
-<body>
+<body style="background-color:#6495ED;">
     <div class="all">
         <div class="center">
 
             <?php
-            echo '<h1>Bienvenido ' . $_SESSION["username"] . '</h1>';
+            echo '<h1>Bienvenido, ' . $_SESSION["username"] . '</h1>';
 
             $connect = mysqli_connect("localhost", "xvenve", "[n.A@Muz/mJpX.xf", "tfg_db");
 

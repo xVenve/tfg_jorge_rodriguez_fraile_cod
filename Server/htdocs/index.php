@@ -33,9 +33,9 @@ if (isset($_POST["login"])) {
     <link href="styles.css" rel="stylesheet" />
 </head>
 
-<body>
+<body style="background-color:#6495ED;">
     <br><br />
-    <div class="container all" style="width:500px;">
+    <div class="container all" style="width:500px; background-color:#4169E1;">
         <h3 align="center">Inicio de sesión</h3>
         <br /><br />
         <form method="post">
@@ -43,7 +43,7 @@ if (isset($_POST["login"])) {
             <input type="text" name="username" class="form-control" /><br />
             <label>Contraseña</label>
             <input type="password" name="password" class="form-control" /><br />
-            <input type="submit" name="login" value="Iniciar sesión" class="btn btn-info" /><br />
+            <input type="submit" name="login" value="Iniciar sesión" class="boton" /><br />
         </form>
     </div>
 </body>
