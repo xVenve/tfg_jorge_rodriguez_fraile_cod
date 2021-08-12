@@ -1,6 +1,7 @@
 import uuid
 from datetime import datetime
 import time
+import socket
 
 from co2 import *
 from database import *
@@ -8,12 +9,26 @@ from sds011 import *
 from co import *
 from temp_hum import *
 
+# Device IP
+def get_ip():
+    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    try:
+        # doesn't even have to be reachable
+        s.connect(('10.255.255.255', 1))
+        IP = s.getsockname()[0]
+    except Exception:
+        IP = '127.0.0.1'
+    finally:
+        s.close()
+    return IP
+
 # Device identification
 device_id = ':'.join(['{:02x}'.format((uuid.getnode() >> ele) & 0xff) for ele in range(0, 8 * 6, 8)][::-1])
 
 # Insert new device/Update device to Online
 device_params = {
     "date": datetime.now().strftime("%d/%m/%Y %H:%M:%S"),
+    "ip": get_ip(),
     "status": "Online",
     "device": device_id,
 }
@@ -68,6 +83,7 @@ except KeyboardInterrupt:
     # Update device to Offline
     device_params = {
         "date": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+        "ip": get_ip(),
         "status": "Offline",
         "device": device_id,
     }

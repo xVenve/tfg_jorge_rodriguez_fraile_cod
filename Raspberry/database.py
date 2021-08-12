@@ -35,9 +35,10 @@ def insert_sensor_data_DB(values):
 def insert_update_device_DB(params):
     mydb = connect()
     with mydb.cursor() as mycursor:
-        sql = "INSERT INTO devices (id, date, status) VALUES (%s, %s, %s)"
+        sql = "INSERT INTO devices (id, ip, date, status) VALUES (%s, %s, %s, %s)"
         val = (
-            params["device"], 
+            params["device"],
+            params["ip"],
             params["date"], 
             params["status"],
         )
@@ -46,8 +47,8 @@ def insert_update_device_DB(params):
             mydb.commit()
             print(params["device"], "inserted")
         except mysql.connector.errors.IntegrityError:
-            sql = "UPDATE devices SET date=%s, status=%s WHERE id=%s"
-            val = (params["date"], params["status"], params["device"])
+            sql = "UPDATE devices SET date=%s, ip=%s, status=%s WHERE id=%s"
+            val = (params["date"], params["ip"], params["status"], params["device"])
             mycursor.execute(sql, val)
             mydb.commit()
             print(params["device"], "updated to", params["status"])
