@@ -9,7 +9,7 @@ if (!$con) {
     die("Connection failed: " . mysqli_connect_error());
 }
 
-$chartQuery = 'SELECT * FROM (SELECT * FROM sensor_data WHERE device="' . $_GET["id"] . '" ORDER BY id DESC LIMIT 720) sub ORDER BY id ASC';
+$chartQuery = 'SELECT * FROM (SELECT * FROM sensor_data WHERE device="' . $_GET["id"] . '" ORDER BY date DESC LIMIT 720) sub ORDER BY date ASC';
 $chartQueryRecords = mysqli_query($con, $chartQuery);
 ?>
 
@@ -18,6 +18,7 @@ $chartQueryRecords = mysqli_query($con, $chartQuery);
 
 <head>
     <title><?php echo $_GET["id"] ?></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
     <link href="styles.css" rel="stylesheet" />
@@ -39,7 +40,12 @@ $chartQueryRecords = mysqli_query($con, $chartQuery);
                 }
                 ?>
             ]);
-            var options = {};
+            var options = {
+                legend: {
+                    position: 'top',
+                    alignment: 'start'
+                }
+            };
 
             var view = new google.visualization.DataView(data);
             view.setColumns([0, 1, 2]);
@@ -58,26 +64,26 @@ $chartQueryRecords = mysqli_query($con, $chartQuery);
     </script>
 </head>
 
-<body style="background-color:#6495ED;">
+<body>
     <div class="all">
         <div class="center">
             <?php
             echo '<h1>' . $_GET["id"] . '</h1>';
 
-            echo '<img src="http://' . $_GET["ip"] . ':8000/stream.mjpg" width="100%">'
+            echo '<img src="http://' . $_GET["ip"] . ':8000/stream.mjpg" id="cam">'
             ?>
-
+            <br></br>
             <button class="boton" id="boton_volver" onclick="location.href=' main.php'">Volver</button>
             <br></br>
 
-            <div id="regions_temp_hum" style="width: 100%; height: 500px;"></div>
-            <div id="regions_pm_co" style="width: 100%; height: 500px;"></div>
-            <div id="regions_co2" style="width: 100%; height: 500px;"></div>
+            <div id="regions_temp_hum" class="grafica"></div>
+            <div id="regions_pm_co" class="grafica"></div>
+            <div id="regions_co2" class="grafica"></div>
             <button class="boton" id="boton_volver" onclick="location.href=' main.php'">Volver</button>
             <br></br>
 
             <?php
-            $query = 'SELECT * FROM sensor_data WHERE device="' . $_GET["id"] . '" ORDER BY id DESC LIMIT 500';
+            $query = 'SELECT * FROM sensor_data WHERE device="' . $_GET["id"] . '" ORDER BY date DESC LIMIT 500';
             $result = mysqli_query($con, $query);
 
             echo "<table class='tables'>

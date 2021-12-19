@@ -27,15 +27,16 @@ if (isset($_POST["login"])) {
 
 <head>
     <title>CPD Control</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     <link href="styles.css" rel="stylesheet" />
 </head>
 
-<body style="background-color:#6495ED;">
+<body>
     <br><br />
-    <div class="container all" style="width:500px; background-color:#4169E1;">
+    <div class="container all">
         <h3 align="center">Inicio de sesión</h3>
         <br /><br />
         <form method="post">
