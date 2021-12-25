@@ -4,8 +4,8 @@ import mysql.connector
 def connect():
     mydb = mysql.connector.connect(
         host="192.168.1.40",
-        user="xvenve",
-        password="[n.A@Muz/mJpX.xf",
+        user="device_user",
+        password="device_pass",
         database="tfg_db",
     )
     return mydb

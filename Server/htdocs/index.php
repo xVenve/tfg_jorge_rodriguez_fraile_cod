@@ -1,5 +1,5 @@
 <?php
-$connect = mysqli_connect("localhost", "xvenve", "[n.A@Muz/mJpX.xf", "tfg_db");
+$connect = mysqli_connect("localhost", "tfg_user", "tfg_pass", "tfg_db");
 session_start();
 if (isset($_SESSION["username"])) {
     header("location:main.php");
@@ -17,7 +17,7 @@ if (isset($_POST["login"])) {
             $_SESSION['username'] = $username;
             header("location:main.php");
         } else {
-            echo '<script>alert("Compruebe los credenciales")</script>';
+            echo '<script>alert("Compruebe las credenciales")</script>';
         }
     }
 }

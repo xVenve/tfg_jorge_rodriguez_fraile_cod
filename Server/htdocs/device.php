@@ -4,7 +4,7 @@ if (!isset($_SESSION["username"])) {
     header("location:index.php?action=login");
 }
 
-$con = mysqli_connect("localhost", "xvenve", "[n.A@Muz/mJpX.xf", "tfg_db");
+$con = mysqli_connect("localhost", "tfg_user", "tfg_pass", "tfg_db");
 if (!$con) {
     die("Connection failed: " . mysqli_connect_error());
 }

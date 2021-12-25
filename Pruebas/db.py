@@ -6,8 +6,8 @@ import mysql.connector
 def connect():
     mydb = mysql.connector.connect(
         host="192.168.1.40",
-        user="xvenve",
-        password="[n.A@Muz/mJpX.xf",
+        user="tfg_user",
+        password="tfg_pass",
         database="prueba"
     )
     return mydb

@@ -1,4 +1,4 @@
-create database tfg_db;
+CREATE DATABASE tfg_db;
 
 CREATE USER 'xvenve'@'%' IDENTIFIED VIA mysql_native_password USING '[n.A@Muz/mJpX.xf';
 
@@ -6,36 +6,42 @@ GRANT USAGE ON *.* TO 'xvenve'@'%' REQUIRE NONE WITH MAX_QUERIES_PER_HOUR 0 MAX_
 
 GRANT ALL PRIVILEGES ON tfg_db.* TO 'xvenve'@'%' WITH GRANT OPTION;
 
+CREATE USER 'tfg_user'@'%' IDENTIFIED VIA mysql_native_password USING '***';
+GRANT ALL PRIVILEGES ON tfg_db.* TO 'tfg_user'@'%';
+
+CREATE USER 'device_user'@'%' IDENTIFIED VIA mysql_native_password USING '***';
+GRANT INSERT, UPDATE ON *.* TO 'device_user'@'%';
+
 use tfg_db;
 
 CREATE TABLE sensor_data (
-    id MEDIUMINT NOT NULL AUTO_INCREMENT,
-    date DATETIME NOT NULL,
-    device VARCHAR(50) NOT NULL,
-    temperature FLOAT NOT NULL,
-    humidity FLOAT NOT NULL,
-    pm2_5 FLOAT NOT NULL,
-    pm10 FLOAT NOT NULL,
-    co FLOAT NOT NULL,
-    co2 MEDIUMINT NOT NULL,
-    intruder tinyint(1) NOT NULL,
-    PRIMARY KEY (id)
+  date datetime NOT NULL,
+  device varchar(50) NOT NULL,
+  temperature float NOT NULL,
+  humidity float NOT NULL,
+  pm2_5 float NOT NULL,
+  pm10 float NOT NULL,
+  co float NOT NULL,
+  co2 mediumint(9) NOT NULL,
+  PRIMARY KEY (date,device),
+  CONSTRAINT deviceData FOREIGN KEY (device) 
+  REFERENCES devices(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 SELECT * FROM sensor_data ORDER BY id DESC;
 
 CREATE TABLE devices (
-    id varchar(50) NOT NULL,
-    date varchar(50) NOT NULL,
-    status varchar(50) NOT NULL,
-    PRIMARY KEY (id)
+  id varchar(50) NOT NULL,
+  ip varchar(16) NOT NULL,
+  date varchar(19) NOT NULL,
+  status varchar(7) NOT NULL,
+  PRIMARY KEY (id)
 );
 
 SELECT * FROM devices ORDER BY id DESC;
 
-CREATE TABLE IF NOT EXISTS `users` (
-  id int(11) NOT NULL AUTO_INCREMENT,
-  username varchar(250) NOT NULL,
-  password varchar(250) NOT NULL,
-  PRIMARY KEY (id)
- );
+CREATE TABLE users (
+  username varchar(32) NOT NULL,
+  password varchar(32) NOT NULL,
+  PRIMARY KEY (username)
+);

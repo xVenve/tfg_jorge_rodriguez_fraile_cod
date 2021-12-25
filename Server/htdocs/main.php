@@ -23,7 +23,7 @@ if (!isset($_SESSION["username"])) {
             <?php
             echo '<h1>Bienvenido, ' . $_SESSION["username"] . '</h1>';
 
-            $connect = mysqli_connect("localhost", "xvenve", "[n.A@Muz/mJpX.xf", "tfg_db");
+            $connect = mysqli_connect("localhost", "tfg_user", "tfg_pass", "tfg_db");
 
             $query = "SELECT * FROM devices";
             $result = mysqli_query($connect, $query);
