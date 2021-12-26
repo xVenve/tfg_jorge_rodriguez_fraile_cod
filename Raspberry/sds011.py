@@ -1,7 +1,7 @@
 """This module provides an abstraction for the SDS011 air partuclate densiry sensor.
 """
-import struct
 import serial
+import struct
 
 
 # TODO: Commands against the sensor should read the reply and return success status.

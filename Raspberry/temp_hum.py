@@ -2,13 +2,11 @@ import Adafruit_DHT
 
 
 class DHT11:
-    humidity = None
-    temperature = None
-
     def __init__(self):
         self.humidity = None
         self.temperature = None
 
+    # Read temperature and humidity
     def tempHumSensor(self):
         dht_sensor = Adafruit_DHT.DHT11
         dht_pin = 4

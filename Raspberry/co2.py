@@ -10,6 +10,7 @@ class CO2Sensor:
             timeout=1
         )
 
+    # Read CO2 value
     def get(self):
         self.serial.write(bytearray(self.request))
         response = self.serial.read(9)

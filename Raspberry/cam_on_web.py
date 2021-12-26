@@ -1,9 +1,9 @@
 import io
-import picamera
 import logging
+import picamera
 import socketserver
-from threading import Condition
 from http import server
+from threading import Condition
 
 
 class StreamingOutput(object):
@@ -14,8 +14,6 @@ class StreamingOutput(object):
 
     def write(self, buf):
         if buf.startswith(b'\xff\xd8'):
-            # New frame, copy the existing buffer's content and notify all
-            # clients it's available
             self.buffer.truncate()
             with self.condition:
                 self.frame = self.buffer.getvalue()
@@ -64,6 +62,7 @@ class StreamingServer(socketserver.ThreadingMixIn, server.HTTPServer):
         super().__init__(address, handler)
 
 
+# Initialize the output stream
 def cam_web():
     with picamera.PiCamera(resolution='640x480', framerate=24) as camera:
         output = StreamingOutput()
